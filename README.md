@@ -7,5 +7,7 @@
 4. npm install or yarn install
 
 
-#Run server
+>Run server
+```
 npm run server
+```
