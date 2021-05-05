@@ -11,3 +11,12 @@
 ```
 npm run server
 ```
+
+>Run client
+```
+npm run client
+```
+>Run in development mode
+```
+npm run dev
+```
