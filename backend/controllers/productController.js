@@ -28,7 +28,7 @@ const getProductById = asyncHandler(async (req, res) => {
 // @access  Public
 const getProductProductReviews = asyncHandler(async (req, res) => {
   const productReviews = await Product.findById(req.params.id)
-    .select("user name rating numReviews reviews")
+    .select("user reviews")
     .populate("user")
     .populate("reviews");
 
@@ -52,7 +52,10 @@ const getProductRating = asyncHandler(async (req, res) => {
   productReviews.reviews.map((p) => Number((ratings += Number(p.rating))));
 
   if (productReviews) {
-    res.json({ ratings: ratings / productReviews.reviews.length });
+    res.json({
+      ratings: ratings / productReviews.reviews.length,
+      numberOfReviews: productReviews.reviews.length,
+    });
   } else {
     res.status(404);
     throw new Error("Product not found");
