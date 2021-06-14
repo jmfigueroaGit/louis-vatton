@@ -15,10 +15,12 @@ const HomeScreen = () => {
         dispatch(listProducts());
     }, [dispatch]);
     return (
-        <>
+        <div className='bg-color'>
             <h1>Latest Products</h1>
             {loading ? (
-                <Loader />
+                <div style={{ height: '70vh' }}>
+                    <Loader />
+                </div>
             ) : error ? (
                 <Message variant='danger'>{error}</Message>
             ) : (
@@ -32,7 +34,7 @@ const HomeScreen = () => {
                     </Row>
                 </>
             )}
-        </>
+        </div>
     );
 };
 

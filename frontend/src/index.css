@@ -3,8 +3,50 @@ body {
     font-family: 'Poppins';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    color: black;
+}
+
+.card-body {
+    margin-left: -1.5rem;
 }
 
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.header {
+    background-color: #db2828;
+    color: white;
+}
+
+.button {
+    background-color: #1d2231;
+}
+
+.text-color {
+    color: white;
+}
+
+.dropdown-menu li a {
+    color: white;
+}
+
+.navbar .btn-group .dropdown-menu a:hover {
+    color: #000 !important;
+}
+
+.navbar .btn-group .dropdown-menu a:active {
+    color: #fff !important;
+}
+
+.footer {
+    text-align: center;
+    background: #1d2231;
+    color: white;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 100%;
 }

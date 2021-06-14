@@ -16,24 +16,30 @@ const Header = () => {
 
     return (
         <header>
-            <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
+            <Navbar
+                className='header'
+                variant='dark'
+                expand='lg'
+                collapseOnSelect
+            >
                 <Container>
                     <LinkContainer to='/'>
-                        <Navbar.Brand>Louis Vaton</Navbar.Brand>
+                        <Navbar.Brand>Louis Vatton</Navbar.Brand>
                     </LinkContainer>
                     <Navbar.Toggle aria-controls='basic-navbar-nav' />
                     <Navbar.Collapse id='basic-navbar-nav'>
                         <Nav className='ml-auto'>
                             <LinkContainer to='/cart'>
-                                <Nav.Link>
-                                    <i className='fas fa-shopping-cart'></i>{' '}
-                                    Cart
+                                <Nav.Link className='text-color'>
+                                    <i className='fas fa-shopping-cart text-color'></i>
+                                    <span className='text-color'> Cart</span>
                                 </Nav.Link>
                             </LinkContainer>
                             {userInfo ? (
                                 <NavDropdown
                                     title={userInfo.name}
                                     id='username'
+                                    style={{ color: 'white' }}
                                 >
                                     <NavDropdown.Item onClick={logoutHandler}>
                                         Logout
@@ -41,7 +47,7 @@ const Header = () => {
                                 </NavDropdown>
                             ) : (
                                 <LinkContainer to='/login'>
-                                    <Nav.Link>
+                                    <Nav.Link className='text-color'>
                                         <i className='fas fa-user'></i> Sign In
                                     </Nav.Link>
                                 </LinkContainer>

@@ -92,7 +92,7 @@ const ProductListScreen = ({ history, match }) => {
                         bordered
                         hover
                         responsive
-                        className='table-sm'
+                        className='table-md '
                     >
                         <thead>
                             <tr>

@@ -84,18 +84,20 @@ const ProductScreen = ({ history, match }) => {
     };
 
     return (
-        <>
-            <Link className='btn btn-light my-3' to='/'>
+        <div className='bg-color'>
+            <Link className='my-3 btn btn-light' to='/'>
                 Go Back
             </Link>
             {loading ? (
-                <Loader />
+                <div style={{ height: '70vh' }}>
+                    <Loader />
+                </div>
             ) : error ? (
                 <Message variant='danger'>{error}</Message>
             ) : (
-                <>
-                    <Row>
-                        <Col md={6}>
+                <div className='bg-color'>
+                    <Row className='bg-color'>
+                        <Col md={6} className='bg-color'>
                             <Image
                                 src={product.image}
                                 alt={product.name}
@@ -103,17 +105,12 @@ const ProductScreen = ({ history, match }) => {
                             />
                             <h3>{product.name}</h3>
                         </Col>
-                        <Col md={3}>
-                            <ListGroup variant='flush'>
+                        <Col md={3} className='bg-color'>
+                            <ListGroup className='bg-color'>
                                 <ListGroup.Item>
                                     <h3>{product.name}</h3>
                                 </ListGroup.Item>
-                                <ListGroup.Item>
-                                    <Rating
-                                        value={product.rating}
-                                        text={`${product.numReviews} reviews`}
-                                    />
-                                </ListGroup.Item>
+
                                 <ListGroup.Item>
                                     Price: ${product.price}
                                 </ListGroup.Item>
@@ -182,7 +179,7 @@ const ProductScreen = ({ history, match }) => {
                                     <ListGroup.Item>
                                         <Button
                                             onClick={addToCartHandler}
-                                            className='btn-block'
+                                            className='btn-block button'
                                             type='button'
                                             disabled={
                                                 product.countInStock === 0
@@ -285,6 +282,7 @@ const ProductScreen = ({ history, match }) => {
                                                     <Button
                                                         type='submit'
                                                         variant='primary'
+                                                        className='button'
                                                     >
                                                         Submit
                                                     </Button>
@@ -304,9 +302,9 @@ const ProductScreen = ({ history, match }) => {
                             )}
                         </Col>
                     </Row>
-                </>
+                </div>
             )}
-        </>
+        </div>
     );
 };
 
