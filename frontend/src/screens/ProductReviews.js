@@ -1,6 +1,12 @@
-import React, { useEffect } from "react";
-import { LinkContainer } from "react-router-bootstrap";
-import { Table, Button, Row, Col } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import {
+  Table,
+  Row,
+  Col,
+  DropdownButton,
+  Dropdown,
+  Form,
+} from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
@@ -11,8 +17,30 @@ import {
   createProduct,
 } from "../actions/productActions";
 import { PRODUCT_CREATE_RESET } from "../constants/productConstants";
+import axios from "axios";
 
-const ProductListScreen = ({ history, match }) => {
+const ProductReviewsScreen = ({ history, match }) => {
+  const [selectedProduct, setSelectedProduct] = useState("");
+  const [searchItem, setSearchItem] = useState("");
+  const [productReviews, setProductReviews] = useState([]);
+  const [productName, setProductName] = useState("");
+
+  useEffect(() => {
+    const getProductReviews = async () => {
+      if (selectedProduct !== "") {
+        const data = await axios
+          .get(`/api/products/${selectedProduct}/reviews`)
+          .then((res) => res.data);
+
+        if (data) {
+          setProductReviews(data.reviews);
+          setProductName(data.name);
+        }
+      }
+    };
+    getProductReviews();
+  }, [selectedProduct]);
+
   const pageNumber = match.params.pageNumber || 1;
 
   const dispatch = useDispatch();
@@ -74,7 +102,7 @@ const ProductListScreen = ({ history, match }) => {
     <>
       <Row className="align-items-center">
         <Col>
-          <h1>Products</h1>
+          <h1>Product Reviews</h1>
         </Col>
       </Row>
       {loadingDelete && <Loader />}
@@ -87,39 +115,50 @@ const ProductListScreen = ({ history, match }) => {
         <Message variant="danger">{error}</Message>
       ) : (
         <>
+          <Row className="table-controls">
+            <DropdownButton
+              title="Select Product"
+              onSelect={(e) => setSelectedProduct(e)}
+            >
+              {products.map((product) => (
+                <Dropdown.Item eventKey={product._id} key={product._id}>
+                  {product.name}
+                </Dropdown.Item>
+              ))}
+            </DropdownButton>
+
+            <Form
+              onSubmit={(e) => {
+                e.preventDefault();
+                console.log(searchItem);
+              }}
+            >
+              <Form.Group>
+                <Form.Control
+                  placeholder="Search"
+                  type="text"
+                  value={searchItem}
+                  onChange={(e) => setSearchItem(e.target.value)}
+                />
+              </Form.Group>
+            </Form>
+          </Row>
+
+          <p>Selected Product ID: {selectedProduct}</p>
           <Table striped bordered hover responsive className="table-md ">
             <thead>
               <tr>
-                <th>ID</th>
                 <th>NAME</th>
-                <th>PRICE</th>
-                <th>CATEGORY</th>
-                <th>BRAND</th>
-                <th></th>
+                <th>RATING</th>
+                <th>COMMENT</th>
               </tr>
             </thead>
             <tbody>
-              {products.map((product) => (
+              {productReviews.map((product) => (
                 <tr key={product._id}>
-                  <td>{product._id}</td>
-                  <td>{product.name}</td>
-                  <td>${product.price}</td>
-                  <td>{product.category}</td>
-                  <td>{product.brand}</td>
-                  <td>
-                    <LinkContainer to={`/admin/product/${product._id}/edit`}>
-                      <Button variant="light" className="btn-sm">
-                        <i className="fas fa-edit"></i>
-                      </Button>
-                    </LinkContainer>
-                    <Button
-                      variant="danger"
-                      className="btn-sm"
-                      onClick={() => deleteHandler(product._id)}
-                    >
-                      <i className="fas fa-trash"></i>
-                    </Button>
-                  </td>
+                  <td>{productName}</td>
+                  <td>{product.rating}</td>
+                  <td>{product.comment}</td>
                 </tr>
               ))}
             </tbody>
@@ -131,4 +170,4 @@ const ProductListScreen = ({ history, match }) => {
   );
 };
 
-export default ProductListScreen;
+export default ProductReviewsScreen;
